@@ -3,7 +3,7 @@ const Datastore = require('nedb');
 const app = express();
 
 
-app.listen(5000, () => console.log('listening at 5000'));
+app.listen(3002, () => console.log('listening at 3002'));
 app.use(express.static('public'));
 app.set('view engine', 'ejs')
 
