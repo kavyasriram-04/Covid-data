@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+      text: "COVID-19 Data "
+      },
+      data: [
+      {
+        type: "doughnut",
+        indexLabelPlacement: "outside",
+         startAngle: 90, 
+        dataPoints: [
+          { x: 10, y: 71, label: "Recovered" },
+          { x: 20, y: 55, label: "Infected"},
+          { x: 30, y: 50, label: "Deceased"},
+        
+        ]
+      }
+      ]
+    });
+
+    chart.render();
+  }
+  </script>
+ <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+  <div id="chartContainer" style="height: 300px; width: 100%;">
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+    
+    <meta charset="utf-8">
+    <title>Test</title>
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+<script>
+  
+var covid
+
+function setup() {
+    createCanvas(1000, 600);  
+    loadJSON("https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true", getData);
+    console.log("OKKKK");
+  }
+  
+  
+  function getData(data) {
+      console.log(data);
+      covid = data;
+      const NumberOfInfected = {'infected': covid[2], 'infected': covid[5]};
+      const NumberOfRecovered = {'recovered': covid[2], 'recovered': covid[5]};
+      
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(NumberOfInfected)
+      };
+      fetch('/mydata', options);
+
+    }
+              
+    setup();          
+   
+    
+
+
+    </script>
+
+  </body>
+</html>

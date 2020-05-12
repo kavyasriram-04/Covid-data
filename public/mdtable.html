@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>COVID-19 Data</title>
+
+    <style>
+        table, th, td {
+                  border: 1px solid black;
+        }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+        <script>
+
+            var covid;
+            var data;
+            function setup() {
+                loadJSON("https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true", getData);
+                console.log("Successful");
+              }
+              
+              
+              function getData(data) {
+                  covid = data;
+                covidData();
+                }
+
+                function covidData(){
+                var covidcases = [
+                  ["Country", "China", "India", "US", "UK", "Brazil"],
+                  ["Infected", covid[8]['infected'], covid[16]['infected'], covid[43]['infected'], covid[42]['infected'], covid[5]['infected']],
+                  ["Recovered", covid[8]['recovered'], covid[16]['recovered'], covid[43]['recovered'], covid[42]['recovered'], covid[5]['recovered']],
+                  ["Deceased", covid[8]['deceased'], covid[16]['deceased'], covid[43]['deceased'], covid[42]['deceased'], covid[5]['deceased']]
+                ]
+
+                var colspan = 6,
+                html = "<table><tr>"
+
+                for (var i=0; i<covidcases.length; i++){
+                    Arraylength = covidcases[i].length;
+                for (var j=0; j<Arraylength;j++){
+                    html += "<td>" + covidcases[i][j] + "</td>";
+                    var row = j+1;
+                if  (row%colspan==0 && row!=covidcases.lenth){
+                    html += "</tr><tr>";
+
+                       }
+                   }
+                 }
+                
+                html += "</tr></table>";
+                document.getElementById("table").innerHTML = html;
+                };
+    
+                function GetSelectedValue(){
+				var selection = document.getElementById("country");
+				var result = selection.options[selection.selectedIndex].value;
+
+				document.getElementById("result").innerHTML = result;
+			}
+
+
+    </script>
+    
+     </head>
+        <body>
+        <div id= "table"></div>
+
+    <p id="result">Select a country</p>
+
+    <select id="country">
+        <option value="None">-- Select --</option>
+        <option value=>China</option>
+        <option value=>United States</option>
+        <option value=>United Kingdom</option>
+        <option value=>Brazil</option>
+        <option value=>India</option>
+
+    </select>
+
+        <br/>
+		<br/>
+        <button type="button" onclick="GetSelectedValue()">Click to get data</button>
+        
+       </body>
+</html>

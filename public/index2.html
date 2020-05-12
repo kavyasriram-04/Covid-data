@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+        
+    <meta charset="utf-8">
+    <title></title>
+    </head>
+    <style>
+        table, th, td {
+                  border: 1px solid black;
+        }
+        </style>
+        </head>
+
+    <body>
+     
+<h1>COVID-19 Data</h1>
+
+<table>
+  <tr>
+    <th>Countries</th>
+    <th>Cases</th>
+    <th>Recovered</th>
+    <th>Deaths</th>
+
+  </tr>
+  <tr>
+    <td>India</td>
+    <td>30,000</td>
+    <td>7500</td>
+    <td>1000</td>
+
+  </tr>
+  <tr>
+    <td>China</td>
+    <td>82,874</td>
+    <td>77,642</td>
+    <td>4,633</td>
+    
+  </tr>
+</table>
+
+        <script>
+            var covid
+            
+            function setup() {
+                createCanvas(1000, 600);  
+                loadJSON("https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true", getData);
+                console.log("Successful");
+              }
+              
+              
+              function getData(data) {
+                  console.log(data);
+                  covid = data;
+                  const NumberOfInfected = {'infected': covid[4], 'infected': covid[7]};
+                  const NumberOfRecovered = {'recovered': covid[5], 'recovered': covid[6]};
+                  
+                  const options = {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(NumberOfInfected)
+                  };
+                  fetch('/mydata', options);
+            
+                }
+            
+                </script>
+    </body>
+</html>

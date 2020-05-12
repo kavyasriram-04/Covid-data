@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>COVID-19 Data</title>
+
+    <style>
+        table, th, td {
+                  border: 1px solid black;
+        }
+        </style>
+           </select>
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+
+        <form>
+        Select a country:
+        <select id="dropdown" onchange="Select()">
+         <option></option>
+         <option>India</option>
+         <option>China</option>
+         <option>US</option>
+         <option>UK</option>
+         <option>Brazil</option>
+     </select>
+    </form>
+
+   
+<script>
+  const cool = require('cool-ascii-faces')
+const express = require('express')
+const path = require('path')
+const PORT = process.env.PORT || 5000
+
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .get('/cool', (req, res) => res.send(cool()))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  
+            var covid;
+            var data;
+            function setup() {
+                loadJSON("https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true", getData);
+                console.log("Successful");
+              }
+            
+              function getData(data) {
+                  covid = data;
+                  chart();
+                }
+
+            function Select() {
+            var getValue = document.getElementById('dropdown').value;
+                var covidcases = [
+                  ["Country", "China", "India", "US", "UK", "Brazil"],
+                  ["Infected", covid[8]['infected'], covid[16]['infected'], covid[42]['infected'], covid[41]['infected'], covid[5]['infected']],
+                  ["Recovered", covid[8]['recovered'], covid[16]['recovered'], covid[42]['recovered'], covid[41]['recovered'], covid[5]['recovered']],
+                  ["Deceased", covid[8]['deceased'], covid[16]['deceased'], covid[42]['deceased'], covid[41]['deceased'], covid[5]['deceased']]
+                ]
+
+                for (var i = 0; i<covidcases.length; i++){
+             var innerLenght = covidcases[i].length;
+             for (var j = 0; j<innerLenght; j++){
+               var inputCheck = covidcases[i][j]; 
+              if (getValue == inputCheck){
+               country =  inputCheck
+               infected = covidcases[i + 1][j]
+               recovered = covidcases[i + 2][j]
+               deceased =  covidcases[i + 3][j]
+
+               covidArray = [
+                 ["Country", country],
+                 ["Infected", infected],
+                 ["Recovered", recovered],
+                 ["Deceased", deceased],
+               ];
+
+                var colspan = 6,
+                html = "<table><tr>"
+
+                for (var i=0; i<covidArray.length; i++){
+                    Arraylength = covidArray[i].length;
+                for (var j=0; j<Arraylength;j++){
+                    html += "<td>" + covidArray[i][j] + "</td>";
+                    var row = j+1;
+                if  (row%colspan==0 && row!=covidArray.lenth){
+                    html += "</tr><tr>";
+
+                       }
+                   }
+                 }
+              
+                html += "</tr></table>";
+                document.getElementById("table").innerHTML = html;
+                };
+    
+                function GetSelectedValue(){
+				var selection = document.getElementById("country");
+				var result = selection.options[selection.selectedIndex].value;
+
+				document.getElementById("result").innerHTML = result;
+			}
+              }
+                }
+                  };
+
+    </script>
+     <script>
+
+        function chart() {
+        var infected
+        var recovered
+        var deceased
+        var covidcases 
+        
+        var chart = new CanvasJS.Chart("piechart", {
+            animationEnabled: true,
+            title: {
+                text: "COVID-19"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 240,
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                    {y: [covid[8]['infected']], label: "Infected"},
+                    {y: [covid[8]['recovered']], label: "Recovered"},
+                    {y: [covid[8]['deceased']], label: "Deceased"},
+                  
+                ]
+
+            }]
+
+        });
+        chart.render();
+        covidData();
+        }
+
+        async function getDBinfo(){
+          const respose = await fetch ('/mydata');
+          const dbdata = await response.json();
+        }
+        function covidData(){
+                  const options = {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(covid)
+                  };
+                  fetch('/mydata', options);
+                }
+                
+            
+                </script>
+     </head>
+     <body>
+     <div id= "table"></div>
+     <div id="piechart" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+     </button>
+
+</body>
+</html>
